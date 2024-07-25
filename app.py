@@ -19,12 +19,13 @@ def home():
 
 @app.route("/marca_list")
 def marcas():
-    return render_template('marca.html')  
+    marcas = Marca.query.all()
+    return render_template('marca.html', marcas = marcas)  
 
 @app.route("/tipo_list")
 def tipos():
     return render_template('tipo.html')  
 
-@app.route("/vehiculos")
+@app.route("/celulares")
 def vehiculos():
-    return render_template('vehiculos.html')  
+    return render_template('celulares.html')  

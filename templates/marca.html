@@ -1,1 +1,7 @@
 {% extends 'templateBase.html' %}
+
+{% block content %}
+    {% for marca in marcas %}
+        <li>{{marca.nombre}}</li>
+    {% endfor %}
+{% endblock %}
