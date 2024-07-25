@@ -17,6 +17,14 @@ from models import Tipo, Marca
 def home():
     return render_template('index.html')  
 
+@app.route("/marca_list")
+def marcas():
+    return render_template('marca.html')  
+
+@app.route("/tipo_list")
+def tipos():
+    return render_template('tipo.html')  
+
 @app.route("/vehiculos")
 def vehiculos():
     return render_template('vehiculos.html')  
