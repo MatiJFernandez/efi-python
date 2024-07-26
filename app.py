@@ -1,4 +1,5 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, request
+
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate   
 
@@ -17,14 +18,23 @@ from models import Tipo, Marca
 def home():
     return render_template('index.html')  
 
-@app.route("/marca_list")
+@app.route("/marca_list", methods=['POST', 'GET'])
 def marcas():
     marcas = Marca.query.all()
+
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        nuevaMarca = Marca(nombre=nombre)
+        db.session.add(nuevaMarca)
+        db.session.commit()
+        return render_template('marca.html', marcas = marcas)
+
     return render_template('marca.html', marcas = marcas)  
 
 @app.route("/tipo_list")
 def tipos():
-    return render_template('tipo.html')  
+    tipos = Tipo.query.all()
+    return render_template('tipo.html', tipos = tipos)  
 
 @app.route("/celulares")
 def vehiculos():
