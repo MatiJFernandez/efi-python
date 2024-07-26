@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, request, url_for
 
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate   
@@ -27,13 +27,21 @@ def marcas():
         nuevaMarca = Marca(nombre=nombre)
         db.session.add(nuevaMarca)
         db.session.commit()
-        return render_template('marca.html', marcas = marcas)
+        return redirect(url_for('marcas'))
 
     return render_template('marca.html', marcas = marcas)  
 
-@app.route("/tipo_list")
+@app.route("/tipo_list", methods=['POST', 'GET'])
 def tipos():
     tipos = Tipo.query.all()
+
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        nuevoTipo = Tipo(nombre=nombre)
+        db.session.add(nuevoTipo)
+        db.session.commit()
+        return redirect(url_for('tipos'))
+    
     return render_template('tipo.html', tipos = tipos)  
 
 @app.route("/celulares")
