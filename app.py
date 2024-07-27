@@ -31,6 +31,11 @@ def marcas():
 
     return render_template('marca.html', marcas = marcas)  
 
+@app.route("/marca/<id>/celulares")
+def celularesPorMarca(id):
+    celulares = Celular.query.filter_by(marcaID=id)
+    return render_template("celularesPorMarca.html", celulares=celulares)
+
 @app.route("/tipo_list", methods=['POST', 'GET'])
 def tipos():
     tipos = Tipo.query.all()
