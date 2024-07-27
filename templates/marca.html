@@ -14,7 +14,7 @@
             <h4>Listado de marcas</h4>
             {% for marca in marcas %}
                 <li>
-                    <a href="/marca/{{marca.id}}/celulares">{{marca.nombre}}</a>
+                    <a href="/marca/{{marca.id}}/celulares">{{marca.nombre}}</a> <a href="/marca/{{marca.id}}/editar">Editar</a>
                 </li>
             {% endfor %}
         </div>

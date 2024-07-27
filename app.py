@@ -37,6 +37,16 @@ def celularesPorMarca(id):
     celulares = Celular.query.filter_by(marcaID=id)
     return render_template("celularesPorMarca.html", celulares=celulares, marca = marca)
 
+@app.route("/marca/<id>/editar", methods=['POST', 'GET'])
+def marcaEditar(id):
+    marca = Marca.query.get_or_404(id)
+
+    if request.method == 'POST':
+        marca.nombre = request.form['nombre']
+        db.session.commit()
+        return redirect(url_for('marcas'))
+    return render_template("marcaEdit.html", marca = marca)
+
 @app.route("/tipo_list", methods=['POST', 'GET'])
 def tipos():
     tipos = Tipo.query.all()
