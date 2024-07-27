@@ -12,7 +12,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-from models import Tipo, Marca
+from models import Tipo, Marca, Celular
 
 @app.route("/")
 def home():
@@ -44,6 +44,32 @@ def tipos():
     
     return render_template('tipo.html', tipos = tipos)  
 
-@app.route("/celulares")
-def vehiculos():
-    return render_template('celulares.html')  
+@app.route("/celulares", methods = ['POST', 'GET'])
+def celulares():
+    celulares = Celular.query.all()
+    marcas = Marca.query.all()
+    tipos = Tipo.query.all()
+    
+    if request.method == 'POST':
+        modelo = request.form['modelo']
+        yearFabricacion = request.form['yearFabricacion']
+        precio = request.form['precio']
+        marca = request.form['marca']
+        tipo = request.form['tipo']
+        celularNuevo = Celular(
+            modelo = modelo,
+            yearFabricacion = yearFabricacion,
+            precio = precio,
+            marcaID = marca,
+            tipoID = tipo,
+        )
+        db.session.add(celularNuevo)
+        db.session.commit()
+        return redirect(url_for('celulares'))
+
+    return render_template(
+        'celulares.html',
+        celulares = celulares,
+        marcas = marcas,
+        tipos = tipos,
+    )  

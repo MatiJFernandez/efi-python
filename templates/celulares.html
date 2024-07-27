@@ -1,2 +1,36 @@
 {% extends 'templateBase.html' %}
 
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h4>Crear un nuevo celular</h4>
+            <form action="" method="post">
+                <input type="text" class="form-control mb-2" placeholder="Nombre del modelo" name="modelo">
+                <input type="number" class="form-control mb-2" placeholder="Precio" name="precio">
+                <input type="number" max="2024" min="2000" class="form-control mb-2" placeholder="Año de fabricacion" name="yearFabricacion">
+                <select name="marca" id="" class="form-control mb-2">
+                    {% for marca in marcas %}
+                        <option value="{{marca.id}}">{{marca.nombre}}</option>
+                    {% endfor %}
+                </select>
+                <select name="tipo" id="" class="form-control mb-2">
+                    {% for tipo in tipos %}
+                        <option value="{{tipo.id}}">{{tipo.nombre}}</option>
+                    {% endfor %}
+                </select>
+
+                <button type="submit" class="btn btn-success">Guardar</button>
+            </form>
+        </div>
+
+        <div class="col-6">
+            <h4>Listado de celulares</h4>
+            {% for celular in celulares %}
+                <li>{{celular.modelo}} - {{celular.precio}} - {{celular.yearFabricacion}} - {{celular.marca}} - {{celular.tipo}}</li>
+            {% endfor %}
+        </div>
+    </div>
+</div>    
+    
+{% endblock %}
