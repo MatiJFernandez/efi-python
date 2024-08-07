@@ -1,15 +1,15 @@
 from flask import Flask, render_template, redirect, request, url_for
-
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate   
 
-
+#Instancia de Flask
 app = Flask(__name__)
+
 #config Alchemy
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/efi' #aca se establece la cadena de conexion a la DB
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/efi' #aca se establece la cadena de conexion a la DB(en caso de tener, luego de los ":" va una contraseña)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db = SQLAlchemy(app)
+db = SQLAlchemy(app) 
 migrate = Migrate(app, db)
 
 from models import Tipo, Marca, Celular
@@ -20,7 +20,7 @@ def home():
 
 @app.route("/marca_list", methods=['POST', 'GET'])
 def marcas():
-    marcas = Marca.query.all()
+    marcas = Marca.query.all() #Trae todas las marcas de la BD para pasar al front
 
     if request.method == 'POST':
         nombre = request.form['nombre']
@@ -29,7 +29,7 @@ def marcas():
         db.session.commit()
         return redirect(url_for('marcas'))
 
-    return render_template('marca.html', marcas = marcas)  
+    return render_template('marca.html', marcasFront = marcas)  
 
 @app.route("/marca/<id>/celulares")
 def celularesPorMarca(id):
