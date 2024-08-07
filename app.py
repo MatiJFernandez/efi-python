@@ -65,6 +65,7 @@ def celulares():
     celulares = Celular.query.all()
     marcas = Marca.query.all()
     tipos = Tipo.query.all()
+    print("---------")
     
     if request.method == 'POST':
         modelo = request.form['modelo']

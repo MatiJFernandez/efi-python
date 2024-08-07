@@ -19,11 +19,35 @@ class Celular(db.Model):
     modelo = db.Column(db.String(50), nullable=False)
     yearFabricacion = db.Column(db.Integer)
     precio = db.Column(db.Integer)
-
     #Pertenece a
     marcaID = db.Column(db.Integer, db.ForeignKey('marca.id'), nullable=False)
     tipoID = db.Column(db.Integer, db.ForeignKey('tipo.id'), nullable=False)
-
-    #Relacion directa con el optro objeto
+    #Relacion directa con el otro objeto
     marca = db.relationship('Marca', backref = db.backref('celulares', lazy=True))
     tipo = db.relationship('Tipo', backref = db.backref('celulares', lazy=True))
+
+
+# #Modelos EFI
+# class Equipo(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+
+# class Modelo(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+    
+# class Marca(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+
+# class Fabricante(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+
+# class Caracteristicas(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+
+# class Stock(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+
+# class Proveedor(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+
+# class Accesorio(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
