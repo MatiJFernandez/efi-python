@@ -4,7 +4,8 @@ class Marca(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(50), nullable=False)
 
-    def __str__(self) -> str:
+    #Este metodo logra que al acceder a un objeto de Marca nos muestre el nombre
+    def __str__(self) -> str: 
         return self.nombre
     
 class Tipo(db.Model):
@@ -26,28 +27,54 @@ class Celular(db.Model):
     marca = db.relationship('Marca', backref = db.backref('celulares', lazy=True))
     tipo = db.relationship('Tipo', backref = db.backref('celulares', lazy=True))
 
+    def __str__(self) -> str: 
+        return self.nombreModelo
 
-# #Modelos EFI
-# class Equipo(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
+class Fabricante(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(100), nullable=False)
+    paisOrigen = db.Column(db.String(50))
+    descripcion = db.Column(db.Text)
 
-# class Modelo(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
+    def __str__(self) -> str: 
+        return self.nombre
+
+class Caracteristica(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(100), nullable=False)
+    descripcion = db.Column(db.Text, nullable=False)
     
-# class Marca(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
+    celularID = db.Column(db.Integer, db.ForeignKey('celular.id'), nullable=False)
 
-# class Fabricante(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
+    def __str__(self) -> str: 
+        return self.nombre
 
-# class Caracteristicas(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
+class Stock(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    celularID = db.Column(db.Integer, db.ForeignKey('celular.id'), nullable=False)
+    cantidad = db.Column(db.Integer)
+    fechaModificacion = db.Column(db.DateTime)
+    
+    proveedorID = db.Column(db.Integer, db.ForeignKey('proveedor.id'), nullable=False)
 
-# class Stock(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
+    def __str__(self) -> str: 
+        return self.cantidad
 
-# class Proveedor(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
+class Proveedor(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(100), nullable=False)
+    mail = db.Column(db.String(50))
+    
+    descripcionmarcasID = db.Column(db.Text)
 
-# class Accesorio(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
+    def __str__(self) -> str: 
+        return self.nombre
+
+class Accesorio(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(100), nullable=False)
+
+    #modeloID = 
+
+    def __str__(self) -> str: 
+        return self.nombre

@@ -12,7 +12,7 @@
         </div>
         <div class="col-6">
             <h4>Listado de marcas</h4>
-            {% for marca in marcas %}
+            {% for marca in marcasFront %}
                 <li>
                     <a href="/marca/{{marca.id}}/celulares">{{marca.nombre}}</a> <a href="/marca/{{marca.id}}/editar">Editar</a>
                 </li>
