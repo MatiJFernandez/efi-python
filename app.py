@@ -12,7 +12,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app) 
 migrate = Migrate(app, db)
 
-from models import Tipo, Marca, Celular
+from models import Tipo, Marca, Celular, Fabricante, Caracteristica, Stock, Proveedor, Accesorio
 
 @app.route("/")
 def home():
