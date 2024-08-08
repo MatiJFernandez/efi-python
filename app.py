@@ -18,8 +18,44 @@ from models import Tipo, Marca, Celular, Fabricante, Caracteristica, Stock, Prov
 def home():
     return render_template('index.html')  
 
+@app.route("/celulares", methods = ['POST', 'GET'])
+def celulares():
+    celulares = Celular.query.all()
+    marcas = Marca.query.all()
+    tipos = Tipo.query.all()
+    fabricante = Fabricante.query.all()
+    caracteristica = Caracteristica.query.all()
+    stock = Stock.query.all()
+    proveedor = Proveedor.query.all()
+    accesorio = Accesorio.query.all()
+    
+    if request.method == 'POST':
+        modelo = request.form['modelo']
+        yearFabricacion = request.form['yearFabricacion']
+        precio = request.form['precio']
+        marca = request.form['marca']
+        tipo = request.form['tipo']
+        celularNuevo = Celular(
+            modelo = modelo,
+            yearFabricacion = yearFabricacion,
+            precio = precio,
+            marcaID = marca,
+            tipoID = tipo,
+        )
+        db.session.add(celularNuevo)
+        db.session.commit()
+        return redirect(url_for('celulares')) 
+
+    return render_template(
+        'celulares.html',
+        celulares = celulares,
+        marcas = marcas,
+        tipos = tipos,
+    )  
+
 @app.route("/marca_list", methods=['POST', 'GET'])
 def marcas():
+
     marcas = Marca.query.all() #Trae todas las marcas de la BD para pasar al front
 
     if request.method == 'POST':
@@ -30,6 +66,19 @@ def marcas():
         return redirect(url_for('marcas'))
 
     return render_template('marca.html', marcasFront = marcas)  
+
+@app.route("/tipo_list", methods=['POST', 'GET'])
+def tipos():
+    tipos = Tipo.query.all()
+
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        nuevoTipo = Tipo(nombre=nombre)
+        db.session.add(nuevoTipo)
+        db.session.commit()
+        return redirect(url_for('tipos'))
+    
+    return render_template('tipo.html', tipos = tipos)  
 
 @app.route("/marca/<id>/celulares")
 def celularesPorMarca(id):
@@ -47,46 +96,3 @@ def marcaEditar(id):
         return redirect(url_for('marcas'))
     return render_template("marcaEdit.html", marca = marca)
 
-@app.route("/tipo_list", methods=['POST', 'GET'])
-def tipos():
-    tipos = Tipo.query.all()
-
-    if request.method == 'POST':
-        nombre = request.form['nombre']
-        nuevoTipo = Tipo(nombre=nombre)
-        db.session.add(nuevoTipo)
-        db.session.commit()
-        return redirect(url_for('tipos'))
-    
-    return render_template('tipo.html', tipos = tipos)  
-
-@app.route("/celulares", methods = ['POST', 'GET'])
-def celulares():
-    celulares = Celular.query.all()
-    marcas = Marca.query.all()
-    tipos = Tipo.query.all()
-    print("---------")
-    
-    if request.method == 'POST':
-        modelo = request.form['modelo']
-        yearFabricacion = request.form['yearFabricacion']
-        precio = request.form['precio']
-        marca = request.form['marca']
-        tipo = request.form['tipo']
-        celularNuevo = Celular(
-            modelo = modelo,
-            yearFabricacion = yearFabricacion,
-            precio = precio,
-            marcaID = marca,
-            tipoID = tipo,
-        )
-        db.session.add(celularNuevo)
-        db.session.commit()
-        return redirect(url_for('celulares'))
-
-    return render_template(
-        'celulares.html',
-        celulares = celulares,
-        marcas = marcas,
-        tipos = tipos,
-    )  

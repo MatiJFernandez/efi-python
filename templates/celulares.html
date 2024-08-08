@@ -8,19 +8,30 @@
         <div class="col-6">
             <h4>Crear un nuevo celular</h4>
             <form action="" method="post">
-                <input type="text" class="form-control mb-2" placeholder="Nombre del modelo" name="modelo">
-                <input type="number" class="form-control mb-2" placeholder="Precio" name="precio">
-                <input type="number" max="2024" min="2000" class="form-control mb-2" placeholder="Año de fabricacion" name="yearFabricacion">
-                <select name="marca" id="" class="form-control mb-2">
-                    {% for marca in marcas %}
+                <input type="text" class="form-control mb-2" placeholder="Nombre del modelo" name="modelo" required>
+                <input type="number" class="form-control mb-2" placeholder="Precio" name="precio" required>
+                <input type="number" max="2024" min="2000" class="form-control mb-2" placeholder="Año de fabricación"
+                    name="yearFabricacion" required>
+
+                <div class="input-group mb-2">
+                    <select name="marca" id="marca" class="form-control" required>
+                        {% for marca in marcas %}
                         <option value="{{marca.id}}">{{marca.nombre}}</option>
-                    {% endfor %}
-                </select>
-                <select name="tipo" id="" class="form-control mb-2">
-                    {% for tipo in tipos %}
+                        {% endfor %}
+                    </select>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
+                        data-bs-target="#agregarMarcaModal">Agregar</button>
+                </div>
+
+                <div class="input-group mb-2">
+                    <select name="tipo" id="tipo" class="form-control" required>
+                        {% for tipo in tipos %}
                         <option value="{{tipo.id}}">{{tipo.nombre}}</option>
-                    {% endfor %}
-                </select>
+                        {% endfor %}
+                    </select>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
+                        data-bs-target="#agregarTipoModal">Agregar</button>
+                </div>
 
                 <button type="submit" class="btn btn-success">Guardar</button>
             </form>
@@ -28,11 +39,59 @@
 
         <div class="col-6">
             <h4>Listado de celulares</h4>
-            {% for celular in celulares %}
-                <li>{{celular.modelo}} - {{celular.precio}} - {{celular.yearFabricacion}} - {{celular.marca}} - {{celular.tipo}}</li>
-            {% endfor %}
+            <ul>
+                {% for celular in celulares %}
+                <li>{{celular.modelo}} - ${{celular.precio}} - {{celular.yearFabricacion}} - {{celular.marca}} -
+                    {{celular.tipo}} <button>Modificar</button><button>Eliminar</button></li> 
+                {% endfor %}
+            </ul>
         </div>
     </div>
-</div>    
-    
+</div>
+
+<!-- Modal para Agregar Marca -->
+<div class="modal fade" id="agregarMarcaModal" tabindex="-1" aria-labelledby="agregarMarcaModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="agregarMarcaModalLabel">Agregar Nueva Marca</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Aquí puedes colocar tu formulario para agregar una nueva marca -->
+                <form id="formAgregarMarca">
+                    <div class="mb-3">
+                        <label for="nombreMarca" class="form-label">Nombre de la Marca</label>
+                        <input type="text" class="form-control" id="nombreMarca" name="nombreMarca">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Agregar Marca</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Agregar Tipo -->
+<div class="modal fade" id="agregarTipoModal" tabindex="-1" aria-labelledby="agregarTipoModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="agregarTipoModalLabel">Agregar Nuevo Tipo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Aquí puedes colocar tu formulario para agregar un nuevo tipo -->
+                <form id="formAgregarTipo">
+                    <div class="mb-3">
+                        <label for="nombreTipo" class="form-label">Nombre del Tipo</label>
+                        <input type="text" class="form-control" id="nombreTipo" name="nombreTipo">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Agregar Tipo</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
